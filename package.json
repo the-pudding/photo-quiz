@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "nouislider": "14.2.0"
+    "nouislider": "14.2.0",
+    "swiper": "^6.3.2"
   },
   "devDependencies": {
     "archieml": "0.4.2",
