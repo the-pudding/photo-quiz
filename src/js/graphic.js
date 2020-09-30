@@ -134,6 +134,12 @@ function init() {
     start: [1985],
     step:1,
     tooltips: true,
+    format: {
+      from: Number,
+      to: function(value) {
+        return "&rsquo;".concat(JSON.stringify(value).slice(-2));
+      }
+    },
     range: {
         'min': 1940,
         'max': 2010

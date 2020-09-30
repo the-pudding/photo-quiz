@@ -1,12 +1,98 @@
 /* CUSTOM STORY STYLE */
+.start-slide
+  .logo-wrapper
+    position absolute
+    top 1rem
+    left 2rem
+    width 100px
+    a
+      border none
+      img
+        border none
+  .intro__byline
+    position absolute
+    right 2rem
+    top 1rem
+    font-family $national
+    font-size .9rem
+  .wrapper
+    max-width 900px
+    margin 0 auto
+    display flex
+    flex-direction column
+    justify-content space-around
+    height 100vh
+
+  h1
+    font-family 'Space Mono'
+    font-size 100px
+    width 100%
+    margin 0
+    line-height 1
+  .med-text
+    max-width 700px
+    width 100%
+    margin 0
+    margin-top 4rem
+    text-align left
+  .black-button
+    margin 0
+
+.black-button
+  font-size 1rem
+  background-color #202034
+  color white
+  font-family $national
+  padding 1rem
+  font-weight 600
+  text-transform uppercase
+  letter-spacing 1px
+  margin 0 auto
+  margin-top 1rem
+
+.new-user
+  display flex
+  flex-direction column
+  justify-content center
+  height 100vh
+
+.med-text
+  color #FB431E
+  font-family $national
+  font-weight 600
+  font-size 2rem
+  line-height 1.4
+  text-align center
+
+.small-text
+  font-family $national
+  color #B6B6B6
+  text-align center
+  font-size 1rem
+  margin 0 auto
+  span
+    display inline-block
+    width 30px
+    svg
+      width 100%
+      transform translateY(7px)
 
 .swiper-slide
   min-height 100vh
+  height 100vh
+  display flex
+  flex-direction column
+  justify-content space-around
+  height 100vh
+
 
 #age-slider, .photo-slider
   width 90%
   max-width 600px
   margin 0 auto
+  margin-top 5rem
+  margin-bottom 5rem
+
 
 .old-user
   display none
@@ -30,3 +116,53 @@
       width 10px
       height 10px
       align-self center
+.noUi-pips
+  padding 0
+  height 30px
+  top 0
+  .noUi-value-horizontal
+    top 17px
+    position absolute
+    transform translate(-50%,0)
+    font-family $national
+    color #202034
+    font-size .8rem
+  .noUi-marker-large
+    background #202034
+    width 1px
+  .noUi-marker-normal
+    background #E5E5E5
+    width 1px
+    height 10px
+
+.noUi-target
+  box-shadow none
+  border none
+  background none
+.noUi-horizontal .noUi-handle
+  height 40px
+  width 40px
+.noUi-handle
+  background #FB431E
+  font-family $national
+  box-shadow none
+  border none
+  border-radius 50%
+
+  &:before, &:after
+    display none
+  .noUi-tooltip
+    color white
+    border none
+    transform translate(0,-50%)
+    top 50%
+    left 0
+    right 0
+    background none
+    padding 0
+    margin 0
+    font-weight 900
+    text-align center
+    font-size 1rem
+    line-height 1.5
+    height 24px
