@@ -15,6 +15,7 @@
     top 1rem
     font-family $national
     font-size .9rem
+    margin 0
   .wrapper
     max-width 900px
     margin 0 auto
@@ -38,7 +39,7 @@
   .black-button
     margin 0
 
-.black-button
+.black-button, .photo-submit
   font-size 1rem
   background-color #202034
   color white
@@ -49,6 +50,11 @@
   letter-spacing 1px
   margin 0 auto
   margin-top 1rem
+.photo-submit
+  padding 1rem 3rem
+
+.photo-container
+  margin 0 auto
 
 .new-user
   display flex
@@ -93,29 +99,44 @@
   margin-top 5rem
   margin-bottom 5rem
 
-
+.photo-slider
+  margin-bottom 3rem
 .old-user
   display none
 
 .photo-question
+  justify-content center
   .photo-container
     max-width 600px
+    padding 20px
+    box-shadow 0 0 9px 4px rgb(229,229,229,.55)
 
 .answer-key
-  font-size 1rem
+  font-size .9rem
   position absolute
-  left 0
+  left 1rem
   top 50%
   display none
   transformY(-50%)
   opacity 0
+  font-family 'Space Mono'
+  color #B6B6B6
   .row
     display flex
+    margin-bottom 1rem
+    .count
+      font-size .9rem
+      color #696969
+      margin 0
     .box
-      border 1px solid black
+      border 1px solid #B6B6B6
       width 10px
       height 10px
       align-self center
+      width 40px
+      height 30px
+      margin-right 1rem
+
 .noUi-pips
   padding 0
   height 30px
@@ -140,14 +161,22 @@
   border none
   background none
 .noUi-horizontal .noUi-handle
-  height 40px
-  width 40px
+  height 55px
+  width 55px
+  top -18px
+  box-shadow 0 0 9px 4px rgb(229,229,229,.75)
+
 .noUi-handle
   background #FB431E
   font-family $national
   box-shadow none
   border none
   border-radius 50%
+  border 3px solid white
+  &:hover
+    cursor grab
+
+
 
   &:before, &:after
     display none
@@ -163,6 +192,10 @@
     margin 0
     font-weight 900
     text-align center
-    font-size 1rem
+    font-size 1.5rem
     line-height 1.5
-    height 24px
+    height 34px
+.noUi-active
+  cursor grabbing
+  &:hover
+    cursor grabbing

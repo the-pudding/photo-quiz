@@ -115,17 +115,23 @@ function init() {
     let el = d3.select(this).node();
 
     noUiSlider.create(el, {
-      start: [50],
+      start: [1985],
       step:1,
       tooltips: true,
+      format: {
+        from: Number,
+        to: function(value) {
+          return "&rsquo;".concat(JSON.stringify(value).slice(-2));
+        }
+      },
       range: {
-          'min': 10,
-          'max': 100
+          'min': 1920,
+          'max': 2020
       },
       pips: {
-          mode: 'values',
-          values: [50],
-          density: 5
+          mode:'values',
+          values:[1920,1930,1940,1950,1960, 1970, 1980, 1990,2000,2010,2020],
+          density: 2
         }
     });
   })
