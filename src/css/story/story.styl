@@ -117,17 +117,18 @@
   left 1rem
   top 50%
   display none
-  transformY(-50%)
+  transform translateY(-50%)
   opacity 0
   font-family 'Space Mono'
   color #B6B6B6
   .row
     display flex
-    margin-bottom 1rem
+    margin-bottom .5rem
     .count
       font-size .9rem
       color #696969
       margin 0
+      line-height 28px
     .box
       border 1px solid #B6B6B6
       width 10px
@@ -135,7 +136,16 @@
       align-self center
       width 40px
       height 30px
-      margin-right 1rem
+      margin-right .5rem
+    .filled-in
+      text-align center
+      background-color #E5E5E5
+      color #565656
+      font-size 14px
+      line-height 28px
+      font-family $national
+    .active
+      border 2px solid black
 
 .noUi-pips
   padding 0
@@ -175,9 +185,6 @@
   border 3px solid white
   &:hover
     cursor grab
-
-
-
   &:before, &:after
     display none
   .noUi-tooltip
@@ -194,7 +201,7 @@
     text-align center
     font-size 1.5rem
     line-height 1.5
-    height 34px
+    height 37px
 .noUi-active
   cursor grabbing
   &:hover

@@ -1,9 +1,13 @@
 import Swiper from 'swiper';
 import noUiSlider from 'nouislider'
+import db from './db';
 
+let hasExistingData = null;
 let mySwiper = null;
 let photoArray = null;
 let startingNum = null;
+let age = null;
+let currentQuestion = 1;
 
 let photoArrayMap;
 
@@ -12,10 +16,30 @@ let colorCrossWalk = {0:"bwFile",1:"colorFile"}
 let photosSelected = [];
 
 let currentPhoto = null;
+let nextPhoto = null;
 /* global d3 */
 function resize() {}
 
+function answerKeyUpdate(answer){
+  let rows = d3.select(".answer-key").selectAll(".row");
+  rows
+    .filter(function(d,i){
+      return i == currentQuestion - 1;
+    })
+    .select(".box")
+    .classed("active",false)
+    .classed("filled-in",true)
+    .html(function(d,i){
+      return "&rsquo;"+answer;
+    })
 
+  rows
+    .filter(function(d,i){
+      return i == currentQuestion;
+    })
+    .select(".box")
+    .classed("active",true);
+}
 
 function swiperController(){
   d3.select(".start-slide").select(".black-button").on("click",function(d){
@@ -23,16 +47,51 @@ function swiperController(){
   });
 
   d3.select(".age-slide").select(".black-button").on("click",function(d){
-    let age = d3.select(this.parentNode).select("#age-slider").select(".noUi-tooltip").text().slice(-2);
+    age = d3.select(this.parentNode).select("#age-slider").select(".noUi-tooltip").text().slice(-2);
+    currentPhoto = nextPhoto;
     mySwiper.slideNext();
   });
 
   d3.selectAll(".photo-question").select(".photo-submit").on("click",function(d){
+
     let value = d3.select(this.parentNode).select(".photo-slider").select(".noUi-tooltip").text().slice(-2);
     currentPhoto.selected = value;
+    answerKeyUpdate(value);
+    output.push(currentPhoto);
+
+    if(d3.select(".swiper-slide-active").classed("last-question")){
+      db.update({"year":age,"answers":output});
+    }
+
+    currentQuestion = currentQuestion + 1;
     mySwiper.slideNext();
   })
 }
+
+function setupDB() {
+  db.setup();
+  const answers = db.getAnswers();
+  if(answers){
+    // hasExistingData = true;
+    //
+    // yearSelected = answers["year"];
+    // genSelected = getGeneration(yearSelected);
+    //
+    // d3.select(".new-user").style("display","none")
+    // d3.select(".old-user").style("display","flex")
+    // d3.selectAll(".old-bday").text(yearSelected);
+    //
+    // answers["answers"].forEach(function(d){
+    //   dbOutput.push(d);
+    //   let songInfo = uniqueSongMap.get(d.key);
+    //   songOutput.push({"song_url":songInfo.song_url,"key":d.key,"artist":songInfo.artist,"title":songInfo.title,"text":answersKey[d.answer].text,"answer":d.answer,"year":songInfo.year})
+    // })
+    //remove this when staging live
+    // quizOutput();
+    // updateOnCompletion();
+  }
+}
+
 
 function getColor(){
   let rand = Math.random();
@@ -50,7 +109,8 @@ function selectPhoto(){
   // let photoId = scale(Math.random());
   let photoId = photoArray[startingNum].key;
   startingNum = startingNum + 1;
-  if(startingNum = photoArray.length){
+
+  if(startingNum == photoArray.length - 1){
     startingNum = 0;
   }
   photosSelected.push(photoId);
@@ -68,6 +128,12 @@ function buildAnswerKey(){
     ;
 
   let boxes = rows.append("div").attr("class","box")
+    .classed("active",function(d,i){
+      if(i==0){
+        return true;
+      }
+      return false;
+    })
   let count = rows.append("p").attr("class","count").text(function(d,i){
     return "No. "+(i+1);
   })
@@ -92,11 +158,14 @@ function slideChangeEvents(){
       d3.select(".quiz-begins").select(".photo-container")
         .each(function(d){
             d3.select(this).node().appendChild(img);
-            currentPhoto = {id:photoId,color:color};
+            console.log("loading next photo");
+            nextPhoto = {id:photoId,color:color};
         });
     }
 
     if (d3.select(".swiper-slide-active").classed("photo-question")){
+
+      currentPhoto = nextPhoto;
 
       let photoId = selectPhoto();
       let color = getColor();
@@ -109,7 +178,8 @@ function slideChangeEvents(){
       d3.select(".swiper-slide-next").select(".photo-container")
         .each(function(d){
           d3.select(this).node().appendChild(img);
-          currentPhoto = {id:photoId,color:color};
+          console.log("loading next photo");
+          nextPhoto = {id:photoId,color:color};
         });
 
     }
@@ -190,9 +260,7 @@ function init(data) {
   buildAnswerKey();
   swiperController();
   slideChangeEvents();
-
-
-
+  setupDB();
 }
 
 function shuffle(array) {
