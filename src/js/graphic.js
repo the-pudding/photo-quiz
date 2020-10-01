@@ -2,16 +2,16 @@ import Swiper from 'swiper';
 import noUiSlider from 'nouislider'
 
 let mySwiper = null;
-
-let photoArray = [
-  {"id":1,url:"1.png"},
-  {"id":2,url:"1.png"}
-];
+let photoArray = null;
+let startingNum = null;
 
 let photoArrayMap;
 
 let output = [];
+let colorCrossWalk = {0:"bwFile",1:"colorFile"}
 let photosSelected = [];
+
+let currentPhoto = null;
 /* global d3 */
 function resize() {}
 
@@ -23,18 +23,36 @@ function swiperController(){
   });
 
   d3.select(".age-slide").select(".black-button").on("click",function(d){
+    let age = d3.select(this.parentNode).select("#age-slider").select(".noUi-tooltip").text().slice(-2);
     mySwiper.slideNext();
   });
 
   d3.selectAll(".photo-question").select(".photo-submit").on("click",function(d){
+    let value = d3.select(this.parentNode).select(".photo-slider").select(".noUi-tooltip").text().slice(-2);
+    currentPhoto.selected = value;
     mySwiper.slideNext();
   })
 }
 
+function getColor(){
+  let rand = Math.random();
+  if(rand > .5){
+    return 0;
+  }
+  else {
+    return 1;
+  }
+}
+
 function selectPhoto(){
 
-  let scale = d3.scaleQuantize().domain([0,1]).range(d3.extent(photoArray,function(d){return d.id;}));
-  let photoId = scale(Math.random());
+  // let scale = d3.scaleQuantize().domain([0,1]).range(d3.extent(photoArray,function(d){return d.key;}));
+  // let photoId = scale(Math.random());
+  let photoId = photoArray[startingNum].key;
+  startingNum = startingNum + 1;
+  if(startingNum = photoArray.length){
+    startingNum = 0;
+  }
   photosSelected.push(photoId);
   return photoId;
 }
@@ -60,32 +78,38 @@ function slideChangeEvents(){
 
   mySwiper.on('slideChangeTransitionEnd', function () {
 
-
     if(d3.select(".swiper-slide-active").classed("before-quiz-begins")){
 
       let photoId = selectPhoto();
-      let photoUrl = photoArrayMap.get(photoId).url;
+      let color = getColor();
+      let fileName = colorCrossWalk[color];
+
+      let photoUrl = photoArrayMap.get(photoId)[fileName];
+
       var img = new Image();
       img.src="assets/images/"+photoUrl;
 
       d3.select(".quiz-begins").select(".photo-container")
         .each(function(d){
             d3.select(this).node().appendChild(img);
+            currentPhoto = {id:photoId,color:color};
         });
     }
 
     if (d3.select(".swiper-slide-active").classed("photo-question")){
 
-      console.log("here");
-
       let photoId = selectPhoto();
-      let photoUrl = photoArrayMap.get(photoId).url;
+      let color = getColor();
+      let fileName = colorCrossWalk[color];
+
+      let photoUrl = photoArrayMap.get(photoId)[fileName];
       var img = new Image();
       img.src="assets/images/"+photoUrl;
 
       d3.select(".swiper-slide-next").select(".photo-container")
         .each(function(d){
           d3.select(this).node().appendChild(img);
+          currentPhoto = {id:photoId,color:color};
         });
 
     }
@@ -98,10 +122,14 @@ function slideChangeEvents(){
   });
 }
 
-function init() {
+function init(data) {
+
+  photoArray = shuffle(data);
+  startingNum = Math.floor(Math.random()*photoArray.length);
+
 
   photoArrayMap = new Map(photoArray.map(function(d){
-    return [d.id,d];
+    return [d.key,d];
   }));
 
   mySwiper = new Swiper ('.swiper-container', {
@@ -114,7 +142,7 @@ function init() {
   d3.selectAll(".photo-slider").each(function(d,i){
     let el = d3.select(this).node();
 
-    noUiSlider.create(el, {
+    let slider = noUiSlider.create(el, {
       start: [1985],
       step:1,
       tooltips: true,
@@ -134,6 +162,8 @@ function init() {
           density: 2
         }
     });
+    d = slider;
+    //d.slider = slider;
   })
 
   noUiSlider.create(d3.select("#age-slider").node(), {
@@ -164,5 +194,25 @@ function init() {
 
 
 }
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 
 export default { init, resize };

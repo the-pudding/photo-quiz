@@ -4,6 +4,8 @@ import isMobile from "./utils/is-mobile";
 import linkFix from "./utils/link-fix";
 import graphic from "./graphic";
 import footer from "./footer";
+import loadData from './load-data'
+
 
 const $body = d3.select("body");
 let previousWidth = 0;
@@ -41,7 +43,10 @@ function init() {
   // setup sticky header menu
   // setupStickyHeader();
   // kick off graphic code
-  graphic.init();
+  loadData('photos.csv').then(result => {
+    graphic.init(result);
+  }).catch(console.error);
+
   // load footer stories
   footer.init();
 }
