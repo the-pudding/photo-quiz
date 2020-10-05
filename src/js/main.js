@@ -6,6 +6,10 @@ import graphic from "./graphic";
 import footer from "./footer";
 import loadData from './load-data'
 
+const VERSION = Date.now();
+
+let dataURL = 'https://pudding.cool/2020/10/photo-quiz-data/output.csv?version='+VERSION
+
 
 const $body = d3.select("body");
 let previousWidth = 0;
@@ -43,8 +47,11 @@ function init() {
   // setup sticky header menu
   // setupStickyHeader();
   // kick off graphic code
-  loadData('photos.csv').then(result => {
-    graphic.init(result);
+  loadData(['photos.csv',dataURL]).then(result => {
+
+    // console.log(result[0],result[1]);
+    console.log(result[1]);
+    graphic.init(result[0]);
   }).catch(console.error);
 
   // load footer stories
