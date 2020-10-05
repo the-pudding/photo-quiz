@@ -17,6 +17,13 @@ let photosSelected = [];
 
 let currentPhoto = null;
 let nextPhoto = null;
+
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
+let yearValues = [1920,1930,1940,1950,1960, 1970, 1980, 1990,2000,2010,2020];
+if(vw < 500){
+  yearValues = [1920,1940,1960, 1980,2000,2020];
+}
 /* global d3 */
 function resize() {}
 
@@ -228,7 +235,7 @@ function init(data) {
       },
       pips: {
           mode:'values',
-          values:[1920,1930,1940,1950,1960, 1970, 1980, 1990,2000,2010,2020],
+          values:yearValues,
           density: 2
         }
     });
