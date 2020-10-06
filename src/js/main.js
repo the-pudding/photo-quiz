@@ -50,8 +50,7 @@ function init() {
   loadData(['photos.csv',dataURL]).then(result => {
 
     // console.log(result[0],result[1]);
-    console.log(result[1]);
-    graphic.init(result[0]);
+    graphic.init([result[0],result[1]]);
   }).catch(console.error);
 
   // load footer stories

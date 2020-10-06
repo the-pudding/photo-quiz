@@ -145,6 +145,7 @@
   .photo-container
     max-width 600px
     padding 20px
+    width calc(100% - 290px)
     box-shadow 0 0 9px 4px rgb(229,229,229,.55)
     @media (max-width: 650px)
       width calc(100% - 100px)
@@ -248,3 +249,156 @@
   cursor grabbing
   &:hover
     cursor grabbing
+
+.photo-answer
+  max-width 1000px
+  margin 0 auto
+  margin-bottom 5rem
+  .photo-answer-row-wrapper
+    div
+      &:last-of-type
+        .photo-answer-text-wrapper
+          p
+            &:first-of-type
+              &:before
+                background #777
+
+
+
+    .photo-answer-row
+      display flex
+      .photo-answer-slider-container
+        width 1px
+        flex-grow 1
+        position relative
+        .actual-bar
+          width 2px
+          height 100%
+          background black
+          position absolute
+          top 0
+          .actual-bar-info
+            font-family $national
+            font-size 12px
+            position absolute
+            bottom -5px
+            left 0
+            right 0
+            margin 0 auto
+            transform translate(0,100%)
+            width 120px
+            p
+              margin 0
+              text-align center
+              font-size 12px
+              transform translate(-50%,0)
+              color #676767
+              line-height 1.3
+              &:first-of-type
+                font-weight 600
+                color #222
+                font-size 14px
+
+        .photo-answer-slider
+          width 100%
+          margin-top 50px
+          .dot-wrapper, .faded-dots-wrapper
+            position absolute
+            top 0
+            left 0
+            width 100%
+            .faded-dot
+              width 10px
+              height 10px
+              background #777777
+              position absolute
+              border-radius 50%
+              opacity .5
+              z-index 10
+            .dot-big
+              width 20px
+              height 20px
+              background #777777
+              top -4px
+              position absolute
+              border-radius 50%
+              box-shadow 0 0 9px 4px rgb(229,229,229,.55)
+              border 2px solid white
+              z-index 100000
+            .dot-you
+              background #fb431e
+
+
+
+          .noUi-handle
+            display none
+    .photo-answer-text-wrapper
+      width 200px
+      font-family $national
+      margin 0
+      margin-right 2rem
+      margin-left 2rem
+      position relative
+      &:first-of-type
+        margin-bottom 1.5rem
+      p
+        margin 0
+        font-size 1rem
+        color #676767
+        position relative
+
+        &:before
+          content ''
+          width 15px
+          height 15px
+          background #777777
+          position absolute
+          left -10px
+          top 7px
+          border-radius 50%
+          border 2px solid white
+          transform translate(-100%,0)
+          box-shadow 0 0 9px 4px rgb(229,229,229,.55)
+        span
+          font-weight 600
+          color black
+        &:first-of-type
+          margin-bottom 1.5rem
+          &:before
+            background #FB431E
+
+
+    .photo-answer-photo
+      width 200px
+      height 140px
+      padding 10px
+      box-shadow 0 0 9px 4px rgb(229,229,229,.55)
+      margin-right 2rem
+  .photo-answer-title-wrapper
+    display flex
+    justify-content space-between
+    border-bottom 2px solid #E5E5E5
+    margin-bottom 1.5rem
+    padding-bottom .5rem
+    .photo-answer-title
+      font-family 'Space Mono'
+      margin 0
+      font-weight 600
+      padding-left calc(200px + 4rem)
+    .photo-answer-key
+      display flex
+      align-self center
+      .photo-answer-key-box
+        border 2px solid #e5e5e5
+        width 20px
+        height 15px
+        margin-right 5px
+      .photo-answer-key-box-active
+        border 2px solid #222
+
+
+
+
+
+//.start-slide, .photo-question, .age-slide
+  //display block
