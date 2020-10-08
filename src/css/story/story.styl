@@ -7,6 +7,7 @@
     width 100px
     @media (max-width: 450px)
       left 1rem
+      width 80px
     a
       border none
       img
@@ -22,6 +23,8 @@
       width 120px
       text-align right
       right 1rem
+      font-size .8rem
+
   .wrapper
     max-width 900px
     margin 0 auto
@@ -29,6 +32,8 @@
     flex-direction column
     justify-content space-around
     height 100vh
+    @media (max-width: 600px)
+      justify-content center
     .text-wrapper
       @media (max-width: 920px)
         padding-top 3rem
@@ -39,13 +44,17 @@
     width calc(100% - 25px)
     margin 0
     line-height 1
+    @media (max-height: 700px)
+      font-size 84px
     @media (max-width: 920px)
       font-size 84px
       margin 0 auto
     @media (max-width: 600px)
       font-size 72px
-    @media (max-width: 470px)
+    @media (max-width: 470px), (max-height: 500px)
       font-size 60px
+    @media (max-width: 400px)
+      font-size 36px
   .med-text
     max-width 700px
     width 100%
@@ -57,11 +66,17 @@
       margin-left auto
       margin-right auto
       max-width none
-    @media (max-width: 700px)
+    @media (max-width: 600px)
       font-size 1.5rem
+      margin-bottom 1.5rem
+    @media (max-width: 470px), (max-height: 500px)
+      font-size 1.3rem
+      margin-top 2rem
+
   .black-button
     margin 0
-    margin-left 12.5px
+    @media (max-width: 900px)
+      margin-left 12px
 
 .black-button, .photo-submit
   font-size 1rem
@@ -74,8 +89,12 @@
   letter-spacing 1px
   margin 0 auto
   margin-top 1rem
+  @media (max-width: 500px), (max-height: 500px)
+    font-size .8rem
+    padding .7rem
 .photo-submit
   padding 1rem 3rem
+  margin-bottom 2rem
 
 .photo-container
   margin 0 auto
@@ -98,13 +117,12 @@
     width calc(100% - 25px)
     margin-left auto
     margin-right auto
-
-  @media (max-width: 450px)
-    font-size 1.5rem
+  @media (max-width: 470px), (max-height: 500px)
+    font-size 1.2rem
 
 .small-text
   font-family $national
-  color #B6B6B6
+  color #505050
   text-align center
   font-size 1rem
   margin 0 auto
@@ -119,17 +137,18 @@
       width 100%
       transform translateY(7px)
 
-.swiper-slide
-  min-height 100vh
-  height 100vh
-  display flex
-  flex-direction column
-  justify-content space-around
-  height 100vh
+.swiper-wrapper
+  .swiper-slide
+    min-height 100vh
+    height 100vh
+    display flex
+    flex-direction column
+    justify-content space-around
+    height 100vh
 
 
 #age-slider, .photo-slider
-  width 90%
+  width calc(100% - 50px)
   max-width 600px
   margin 0 auto
   margin-top 5rem
@@ -137,6 +156,9 @@
 
 .photo-slider
   margin-bottom 3rem
+  @media (max-width: 600px)
+    margin-top 2rem
+    margin-bottom 1.5rem
 .old-user
   display none
 
@@ -148,9 +170,8 @@
     width calc(100% - 290px)
     box-shadow 0 0 9px 4px rgb(229,229,229,.55)
     @media (max-width: 650px)
-      width calc(100% - 100px)
+      width calc(100% - 30px)
       padding 10px
-      margin-left 75px
 
 .answer-key
   font-size .9rem
@@ -162,6 +183,17 @@
   opacity 0
   font-family 'Space Mono'
   color #B6B6B6
+  @media (max-width: 600px)
+    position absolute
+    margin 0 auto
+    display flex
+    top 0
+    left 0
+    right 0
+    transform translate(0,0)
+    justify-content center
+    margin-top 1rem
+
   .row
     display flex
     margin-bottom .5rem
@@ -201,6 +233,7 @@
     font-family $national
     color #202034
     font-size .8rem
+    font-weight 600
   .noUi-marker-large
     background #202034
     width 1px
@@ -255,33 +288,24 @@
   margin 0 auto
   margin-bottom 5rem
   .photo-answer-row-wrapper
-    div
-      &:last-of-type
-        .photo-answer-text-wrapper
-          p
-            &:first-of-type
-              &:before
-                background #777
-
-
-
     .photo-answer-row
       display flex
       .photo-answer-slider-container
         width 1px
         flex-grow 1
         position relative
+        height 130px
         .actual-bar
           width 2px
           height 100%
-          background black
+          background #bdbdbd
           position absolute
           top 0
           .actual-bar-info
             font-family $national
             font-size 12px
             position absolute
-            bottom -5px
+            top -7rem
             left 0
             right 0
             margin 0 auto
@@ -290,18 +314,21 @@
             p
               margin 0
               text-align center
-              font-size 12px
+              font-size 14px
               transform translate(-50%,0)
-              color #676767
+              color #111
               line-height 1.3
+              text-shadow 0 0 0 white, -1px 0 0 white, 1px 1px 0 white, 1px -1px 0 white, 0 1px 0 white, 1px 0 0 white, -1px -1px 0 white, 0 -1px 0 white
               &:first-of-type
                 font-weight 600
                 color #222
-                font-size 14px
+                font-size 1rem
 
         .photo-answer-slider
           width 100%
           margin-top 50px
+          .noUi-value-horizontal
+            font-weight 300
           .dot-wrapper, .faded-dots-wrapper
             position absolute
             top 0
@@ -318,20 +345,39 @@
             .dot-big
               width 20px
               height 20px
-              background #777777
+              background $avgColor
               top -4px
               position absolute
               border-radius 50%
               box-shadow 0 0 9px 4px rgb(229,229,229,.55)
               border 2px solid white
               z-index 100000
+
+              &:before
+                content 'Avg.'
+                font-family $national
+                font-size 12px
+                position absolute
+                top -5px
+                left 50%
+                transform translate(-50%,-100%)
+
             .dot-you
               background #fb431e
+              &:before
+                content 'You'
+                color #fb431e
+                font-weight 600
+
 
 
 
           .noUi-handle
             display none
+      &:first-of-type
+        .photo-answer-slider-container
+          padding-bottom 10rem
+          height auto
     .photo-answer-text-wrapper
       width 200px
       font-family $national
@@ -346,39 +392,70 @@
         font-size 1rem
         color #676767
         position relative
-
-        &:before
-          content ''
-          width 15px
-          height 15px
-          background #777777
-          position absolute
-          left -10px
-          top 7px
-          border-radius 50%
-          border 2px solid white
-          transform translate(-100%,0)
-          box-shadow 0 0 9px 4px rgb(229,229,229,.55)
-        span
+        .button
+          position relative
+          display inline-block
+          padding-left 25px
+          padding-right 8px
+          background rgba(26,89,244,.14)
           font-weight 600
-          color black
+          text-transform uppercase
+          font-size 12px
+          border-radius 3px
+          line-height 1.2rem
+          color #1341b3
+          border 1px solid rgba(26,89,244,.2)
+          &:before
+            content ''
+            width 9px
+            height 9px
+            border-radius 4px
+            position absolute
+            left 4px
+            top 3px
+            background $avgColor
+            border-radius 50%
+            border 2px solid white
+            transform translate(0,0)
+        .you-button
+          color #bf2200
+          background-color rgba(251,68,29,.21)
+          border-color rgba(251,68,29,.29)
+          &:before
+            background $youColor
+        //span
+          //font-weight 300
+          //color black
         &:first-of-type
           margin-bottom 1.5rem
-          &:before
-            background #FB431E
-
 
     .photo-answer-photo
-      width 200px
-      height 140px
+      width 180px
+      height 120px
       padding 10px
       box-shadow 0 0 9px 4px rgb(229,229,229,.55)
       margin-right 2rem
+      background-size cover
+      position relative
+      &:before
+        content 'Black and White'
+        position absolute
+        top -5px
+        left 0
+        font-family $national
+        text-align center
+        width 100%
+        transform translate(0,-100%)
+        font-size .8rem
+        font-weight 600
+    .color-version
+      &:before
+        content 'Color'
   .photo-answer-title-wrapper
     display flex
     justify-content space-between
     border-bottom 2px solid #E5E5E5
-    margin-bottom 1.5rem
+    margin-bottom 2.5rem
     padding-bottom .5rem
     .photo-answer-title
       font-family 'Space Mono'
@@ -401,4 +478,36 @@
 
 
 //.start-slide, .photo-question, .age-slide
-  //display block
+  //display none !important
+//.all-done
+  //height auto !important
+
+
+.text-wrapper-end
+  p
+    max-width 600px
+    margin 0 auto
+    margin-bottom 1.5rem
+    font-family $tiempos
+    font-size 1.2rem
+
+
+
+.all-done
+  .header-text
+    font-size 1.8rem
+    max-width 600px
+    font-family $national
+    margin 0 auto
+    font-weight 600
+    margin-bottom 2rem
+    padding-top 4rem
+  .photo-answer-wrapper
+    margin-top 1rem
+
+.first-set
+  p
+    &:last-of-type
+      font-size 1.8rem
+      line-height 1.6
+      margin-top 3rem

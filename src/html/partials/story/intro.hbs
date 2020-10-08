@@ -138,9 +138,24 @@
 				</div>
 
 				<div class="swiper-slide all-done">
+					<p class="header-text">Congrats – you’ve made it through the quiz! But what does it all mean?
+					</p>
 
+					<div class="text-wrapper-end">
+						<div class="first-set">
+							{{#each copy.wrap}}
+									<p>{{{value}}}</p>
+							{{/each}}
+						</div>
+					</div>
 					<div class="photo-answer-wrapper">
 
+					</div>
+
+					<div class="text-wrapper-end">
+							{{#each copy.methods}}
+									<p>{{{value}}}</p>
+							{{/each}}
 					</div>
 
 					<!-- <div class="photo-answer">
