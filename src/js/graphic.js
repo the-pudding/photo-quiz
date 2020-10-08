@@ -93,7 +93,7 @@ function swiperController(){
 function buildFinalSlide(){
 
   let container = d3.select(".photo-answer-wrapper");
-  let results = output//[
+  let results = output;//[
   // let results = [
   // {color: "1", id: "7", selected: "56"},
   // {color: "1", id: "6", selected: "65"},
@@ -402,6 +402,8 @@ function selectPhoto(){
   }
 
   let photoId = photoArray[startingNum].key;
+
+  console.log(photoArray);
 
   photosSelected.push(photoId);
   return photoId;
