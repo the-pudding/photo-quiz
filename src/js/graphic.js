@@ -132,7 +132,7 @@ function buildFinalSlide(){
     .data(function(d,i){
       let colorQuizzed = +d.color;
       let grouped = d3.groups(allReaderDataNest.get(+d.id), t => +t.color).sort(function(a,b){
-        return a[0]-b[0];
+        return b[0]-a[0];
       });
       return grouped;
     })
@@ -146,13 +146,19 @@ function buildFinalSlide(){
       }
       return false;
     })
+    .classed("bw-row",function(d){
+      if(d[0] == 0){
+        return true;
+      }
+      return false;
+    })
     ;
 
-  let photoAnswerText = photoAnswersRow.append("div").attr("class","photo-answer-text-wrapper")
+  let photoAnswerText = photoAnswersRow.append("p").attr("class","photo-answer-text-wrapper")
 
   let averagesCalculated = new Map();
 
-  photoAnswerText.html(function(d,i){
+  photoAnswerText.each(function(d,i){
 
     let topRow = false;
     if(i==0){
@@ -183,15 +189,30 @@ function buildFinalSlide(){
 
     averagesCalculated.set(rowData.id+"_"+d[0],avg)
 
-    if(d3.select(this.parentNode).classed("your-guess-row")){
-      return '<p><span class="you-button button">you</span> saw this photo in <span>'+colorCrossText[colorQuizzed]+'</span> and thought it was taken in <span>'+guessedDate+'</span>. On <span class="avg-button button">average</span>, other people who saw this photo in <span>'+colorCrossText[colorQuizzed]+'</span> said it was taken in <span>'+avg+'</span>.</p>';
-    }
-    else {
-      return '<p>On <span class="avg-button button">average</span>, other people who saw this photo in <span>'+colorCrossText[d[0]]+'</span> said it was taken in <span>'+avg+'</span>.</p>';
-    }
+    // if(d3.select(this.parentNode).classed("your-guess-row")){
+    //   return '<p><span class="you-button button">you</span> saw this photo in <span>'+colorCrossText[colorQuizzed]+'</span> and thought it was taken in <span>'+guessedDate+'</span>. On <span class="avg-button button">average</span>, other people who saw this photo in <span>'+colorCrossText[colorQuizzed]+'</span> said it was taken in <span>'+avg+'</span>.</p>';
+    // }
+    // else {
+    //   return '<p>On <span class="avg-button button">average</span>, other people who saw this photo in <span>'+colorCrossText[d[0]]+'</span> said it was taken in <span>'+avg+'</span>.</p>';
+    // }
   })
 
-  console.log(averagesCalculated);
+  photoAnswerText.html(function(d){
+    let rowData = d3.select(this.parentNode.parentNode.parentNode).datum();
+    let id = +rowData.id;
+
+    let avgBw = averagesCalculated.get(id+"_0");
+    let avgColor = averagesCalculated.get(id+"_1");
+    let change = "older";
+    if(avgBw > avgColor){
+      change = "newer";
+    }
+    if(d3.select(this.parentNode).classed("bw-row")){
+      return "The black and white version, versus the color version, was dated "+(avgBw - avgColor)+" years <span>"+change+"</span> by readers."
+    }
+    return null;
+
+  })
 
   photoAnswersRow.append("div").attr("class","photo-answer-photo").style("background-image",function(d,i){
     let rowData = d3.select(this.parentNode.parentNode.parentNode).datum();
@@ -212,41 +233,59 @@ function buildFinalSlide(){
 
   let photoAnswerSlider = photoAnswerSliderContainer.append("div")
     .attr("class","photo-answer-slider").each(function(d){
-    let slider = noUiSlider.create(d3.select(this).node(), {
-      start: [1920],
-      step:1,
-      tooltips: true,
-      format: {
-        from: Number,
-        to: function(value) {
-          return "&rsquo;".concat(JSON.stringify(value).slice(-2));
-        }
-      },
-      range: {
-          'min': 1920,
-          'max': 2020
-      },
-      pips: {
-          mode:'values',
-          values:[1920,1940,1960, 1980,2000,2020],
-          density: 2
-        }
-    });
+
+      let orient = "horizontal";
+      if(vw < 751){
+        orient = "vertical";
+      }
+
+      let slider = noUiSlider.create(d3.select(this).node(), {
+        start: [1920],
+        step:1,
+        tooltips: true,
+        orientation: orient,
+        format: {
+          from: Number,
+          to: function(value) {
+            return "&rsquo;".concat(JSON.stringify(value).slice(-2));
+          }
+        },
+        range: {
+            'min': 1920,
+            'max': 2020
+        },
+        pips: {
+            mode:'values',
+            values:[1920,1940,1960, 1980,2000,2020],
+            density: 2
+          }
+      });
   });
 
   let scale = d3.scaleLinear().domain([1920,2020]).range([0,100])
 
   let actualBar = photoAnswerSliderContainer.append("div").attr("class","actual-bar")
     .style("left",function(d,i){
+      if(vw < 751){
+        return null;
+      }
       let rowData = d3.select(this.parentNode.parentNode.parentNode).datum();
       let actualDate = actualDates.get(+rowData.id);
       return scale(actualDate)+"%";
+    })
+    .style("top",function(d,i){
+      if(vw < 751){
+        let rowData = d3.select(this.parentNode.parentNode.parentNode).datum();
+        let actualDate = actualDates.get(+rowData.id);
+        return scale(actualDate)+"%";
+      }
+      return null;
     })
 
   let dotWrapper = photoAnswerSlider.append("div")
     .attr("class","dot-wrapper");
 
-  dotWrapper
+  let dotYou = dotWrapper
     .filter(function(d){
       if(d3.select(this.parentNode.parentNode.parentNode).classed("your-guess-row")){
         return d;
@@ -255,13 +294,37 @@ function buildFinalSlide(){
     .append("div")
     .attr("class","dot-big dot-you")
     .style("left",function(d){
+      if(vw < 751){
+        return null;
+      }
       let you = +d3.select(this.parentNode.parentNode.parentNode.parentNode.parentNode).datum().selected;
       if(you < 20){
         return scale(you+2000)+"%";
       }
       return scale(you + 1900)+"%";
     })
+    .style("top",function(d){
+      if(vw < 751){
+        let you = +d3.select(this.parentNode.parentNode.parentNode.parentNode.parentNode).datum().selected;
+        if(you < 20){
+          return scale(you+2000)+"%";
+        }
+        return scale(you + 1900)+"%";
+      }
+      return null;
+    })
     ;
+
+  dotYou.append("p").html(function(d){
+    let you = +d3.select(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode).datum().selected;
+    if(+you < 20){
+      you = (+you)+2000;
+    }
+    else {
+      you = +you + 1900;
+    }
+    return "<span>You</span>"+you;
+  })
 
   dotWrapper.append("div").attr("class","faded-dots-wrapper")
     .selectAll("div")
@@ -272,6 +335,9 @@ function buildFinalSlide(){
     .append("div")
     .attr("class","faded-dot")
     .style("left",function(d,i){
+      if(vw < 751){
+        return null;
+      }
       let value = +d.selected;
       if(value < 20){
         value = value+2000;
@@ -281,10 +347,26 @@ function buildFinalSlide(){
       }
       return scale(value)+"%";
     })
+    .style("top",function(d,i){
+      if(vw < 751){
+        let value = +d.selected;
+        if(value < 20){
+          value = value+2000;
+        }
+        else {
+          value = value + 1900
+        }
+        return scale(value)+"%";
+      }
+      return null;
+    })
 
-  dotWrapper.append("div")
+  let dotAvg = dotWrapper.append("div")
     .attr("class","dot-big dot-avg")
     .style("left",function(d){
+      if(vw < 751){
+        return null;
+      }
       let avg = Math.floor(d3.mean(d[1],function(d){
         let year = 1900;
         if(+d.selected < 20){
@@ -294,7 +376,33 @@ function buildFinalSlide(){
       }));
       return scale(avg)+"%";
     })
+    .style("top",function(d){
+      if(vw < 751){
+        let avg = Math.floor(d3.mean(d[1],function(d){
+          let year = 1900;
+          if(+d.selected < 20){
+            return +d.selected+2000;
+          }
+          return +d.selected + 1900;
+        }));
+        return scale(avg)+"%";
+      }
+      return null;
+
+    })
     ;
+
+  dotAvg.append("p").html(function(d){
+    let avg = Math.floor(d3.mean(d[1],function(d){
+      let year = 1900;
+      if(+d.selected < 20){
+        return +d.selected+2000;
+      }
+      return +d.selected + 1900;
+    }));
+
+    return "<span>Avg</span>"+avg;
+  })
 
   let secondRow = photoAnswersRow.filter(function(d,i){
       if(i!=0){
@@ -303,7 +411,11 @@ function buildFinalSlide(){
     })
 
   secondRow
-    .select(".actual-bar").append("p")
+    .select(".actual-bar").append("div")
+      .attr("class","actual-bar-background");
+
+  secondRow
+    .select(".actual-bar").append("div")
     .attr("class","actual-bar-info")
     .html(function(d){
       let actualDate = actualDates.get(+d3.select(this.parentNode.parentNode.parentNode.parentNode).datum().id);
@@ -402,8 +514,6 @@ function selectPhoto(){
   }
 
   let photoId = photoArray[startingNum].key;
-
-  console.log(photoArray);
 
   photosSelected.push(photoId);
   return photoId;
