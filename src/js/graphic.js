@@ -1,6 +1,9 @@
 import Swiper from 'swiper';
 import noUiSlider from 'nouislider'
 import db from './db';
+import Cursor from './cursor';
+import Grid from './grid';
+
 
 let hasExistingData = null;
 let mySwiper = null;
@@ -53,20 +56,37 @@ function answerKeyUpdate(answer){
       return "&rsquo;"+answer;
     })
 
+    rows
+      .filter(function(d,i){
+        return i == currentQuestion - 1;
+      })
+      .select(".count")
+      .classed("active-count",false)
+
   rows
     .filter(function(d,i){
       return i == currentQuestion;
     })
     .select(".box")
-    .classed("active",true);
+    .classed("active",true)
+  
+  rows
+    .filter(function(d,i){
+      return i == currentQuestion;
+    })
+    .select(".count")
+    .classed("active-count",true)
+
 }
 
 function swiperController(){
   d3.select(".start-slide").select(".black-button").on("click",function(d){
     mySwiper.slideNext();
+    d3.select('.photo-bg').style('display', 'none')
   });
 
   d3.select(".age-slide").select(".black-button").on("click",function(d){
+    console.log('check')
     age = d3.select(this.parentNode).select("#age-slider").select(".noUi-tooltip").text().slice(-2);
     currentPhoto = nextPhoto;
     mySwiper.slideNext();
@@ -87,6 +107,10 @@ function swiperController(){
 
     currentQuestion = currentQuestion + 1;
     mySwiper.slideNext();
+
+    if(currentQuestion == 6) {
+      d3.selectAll('.down-arrow').classed('is-visible', true)
+    }
   })
 }
 
@@ -203,12 +227,13 @@ function buildFinalSlide(){
 
     let avgBw = averagesCalculated.get(id+"_0");
     let avgColor = averagesCalculated.get(id+"_1");
+    let diffVal = Math.abs(avgBw - avgColor)
     let change = "older";
     if(avgBw > avgColor){
       change = "newer";
     }
     if(d3.select(this.parentNode).classed("bw-row")){
-      return "The black and white version, versus the color version, was dated "+(avgBw - avgColor)+" years <span>"+change+"</span> by readers."
+      return "People who saw this photo in black and white dated it <span>"+(diffVal)+" years "+change+"</span> than people who saw it in color."
     }
     return null;
 
@@ -424,7 +449,14 @@ function buildFinalSlide(){
     });
     ;
 
-  d3.select(".yourColorspace").text(colorCrossText[+results[0].color]);
+  d3.select(".yourColorspace").text(function(d) {
+    if (colorCrossText[+results[0].color] == 'color') {
+      return `in ${colorCrossText[+results[0].color]}`
+    }
+    else {
+      return `digitally altered ${colorCrossText[+results[0].color]}`
+    }
+  });
   d3.select(".yourYear").text(function(d){
     let year = +results[0].selected;
     if(year < 20){
@@ -455,7 +487,7 @@ function buildFinalSlide(){
     let color = +results[0].color;
     if(color == 1){
       console.log(colorCrossText[color-1]);
-      return colorCrossText[color-1]
+      return `digitally altered ${colorCrossText[color-1]}`
     }
     return colorCrossText[color+1];
   });
@@ -538,6 +570,11 @@ function buildAnswerKey(){
     })
   let count = rows.append("p").attr("class","count").text(function(d,i){
     return "No. "+(i+1);
+  }).classed('active-count', function(d,i) {
+    if(i==0){
+      return true;
+    }
+    return false;
   })
 }
 
@@ -598,6 +635,11 @@ function slideChangeEvents(){
 }
 
 function init(data) {
+
+  // Initialize grid
+  const grid = new Grid(document.querySelector('.grid'));
+
+  //const cursor = new Cursor(document.querySelector('.cursor'));
 
 
   allReaderData = data[1];
@@ -695,6 +737,12 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+window.onscroll = function() {
+	if (d3.selectAll('.down-arrow').classed('is-visible') == true) {
+		d3.selectAll('.down-arrow').classed('is-visible', false)
+	}
 }
 
 
