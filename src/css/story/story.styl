@@ -1,20 +1,44 @@
 /* CUSTOM STORY STYLE */
+body
+  background-color $off-white
+
+#wordmark
+  path
+    fill $dark-navy
+
+.down-arrow
+  position absolute
+  right 1rem
+  bottom 1rem
+  pointer-events none
+  width 3rem
+  height 3rem
+  display none
+  animation updown 3s
+  animation-iteration-count infinite
+
+  &.is-visible
+    display inline-block
+
+  svg
+    width 3rem
+    height 3rem
+    stroke $youColor
+
 .start-slide
   .logo-wrapper
     position absolute
     top 1rem
-    left 2rem
-    width 100px
-    @media (max-width: 450px)
-      left 1rem
-      width 80px
+    left 1rem
+    width 125px
     a
       border none
       img
         border none
   .intro__byline
     position absolute
-    right 2rem
+    color $dark-navy
+    right 1rem
     top 1rem
     font-family $national
     font-size .9rem
@@ -25,6 +49,10 @@
       right 1rem
       font-size .8rem
 
+    a
+      color $dark-navy
+      border-bottom 1px solid $dark-navy  
+
   .wrapper
     max-width 900px
     margin 0 auto
@@ -34,54 +62,53 @@
     height 100vh
     @media (max-width: 600px)
       justify-content center
-    .text-wrapper
-      @media (max-width: 920px)
-        padding-top 3rem
 
   h1
-    font-family 'Space Mono'
-    font-size 100px
+    font-family $tiempos-hed
+    color $dark-navy
+    set-type-size('xxxx-large', false)
     width calc(100% - 25px)
     margin 0
     line-height 1
-    @media (max-height: 700px)
-      font-size 84px
-    @media (max-width: 920px)
-      font-size 84px
-      margin 0 auto
-    @media (max-width: 600px)
-      font-size 72px
-    @media (max-width: 470px), (max-height: 500px)
-      font-size 60px
-    @media (max-width: 400px)
-      font-size 36px
+    +mq('bp-3')
+      set-type-size('xxxxx-large', false)  
+    +mq('bp-4')
+      set-type-size('med-honker', false)      
   .med-text
-    max-width 700px
+    max-width $column-width
+    set-type-size('large', true)
     width 100%
     margin 0
-    margin-top 4rem
+    margin-top 2rem
     text-align left
-    @media (max-width: 900px)
-      width calc(100% - 25px)
-      margin-left auto
-      margin-right auto
-      max-width none
-    @media (max-width: 600px)
-      font-size 1.5rem
-      margin-bottom 1.5rem
-    @media (max-width: 470px), (max-height: 500px)
-      font-size 1.3rem
-      margin-top 2rem
+    +mq('bp-3')
+      set-type-size('x-large', true)  
 
   .black-button
     margin 0
-    @media (max-width: 900px)
-      margin-left 12px
+
+.start-slide
+  .med-text
+    color $youColor
+    margin-bottom 1rem
+
+  .wrapper
+    padding 4rem 1rem 0 1rem 
 
 .black-button, .photo-submit
+  background-repeat no-repeat
+  transition background-position .08s ease-out
+  background-image linear-gradient(180deg, transparent 0, $dark-navy 0)
+  background-position -14rem 0
+  pointer-events all
+  position relative
+  transition 0.25s ease-in
   font-size 1rem
-  background-color #202034
-  color white
+  border 3px solid $dark-navy
+  background-color transparent
+  max-width 14rem
+  height 4rem
+  color $dark-navy
   font-family $national
   padding 1rem
   font-weight 600
@@ -89,15 +116,20 @@
   letter-spacing 1px
   margin 0 auto
   margin-top 1rem
-  @media (max-width: 500px), (max-height: 500px)
-    font-size .8rem
-    padding .7rem
+  //@media (max-width: 500px), (max-height: 500px)
+  //  font-size .8rem
+  //  padding .7rem
+  &:hover
+    background-position 0rem 0rem
+    color $white
 .photo-submit
   padding 1rem 3rem
-  margin-bottom 2rem
+  margin 0 auto 2rem auto
 
 .photo-container
   margin 0 auto
+  padding 1.5rem
+  background-color $white
 
 .new-user
   display flex
@@ -106,28 +138,24 @@
   height 100vh
 
 .med-text
-  color #FB431E
+  set-type-size('large', true)
+  color $dark-navy
   font-family $national
-  font-weight 600
-  font-size 2rem
+  font-weight 700
   line-height 1.4
   text-align center
-  @media (max-width: 700px)
-    font-size 1.75rem
-    width calc(100% - 25px)
-    margin-left auto
-    margin-right auto
-  @media (max-width: 470px), (max-height: 500px)
-    font-size 1.2rem
+  margin 2rem auto
+  +mq('bp-3')
+      set-type-size('x-large', true) 
 
 .small-text
   font-family $national
-  color #505050
+  color $gray-text
   text-align center
   font-size 1rem
   margin 0 auto
   @media (max-width: 450px)
-    width calc(100% - 25px)
+    width calc(100% - 6rem)
     margin-left auto
     margin-right auto
   span
@@ -145,14 +173,13 @@
     flex-direction column
     justify-content space-around
     height 100vh
+    padding 2rem 1rem 0 1rem
 
 
 #age-slider, .photo-slider
-  width calc(100% - 50px)
+  width calc(100% - 4rem)
   max-width 600px
-  margin 0 auto
-  margin-top 5rem
-  margin-bottom 5rem
+  margin 3rem auto
 
 .photo-slider
   margin-bottom 3rem
@@ -165,62 +192,64 @@
 .photo-question
   justify-content center
   .photo-container
-    max-width 600px
-    //padding 20px
-    width calc(100% - 290px)
+    max-width 460px
     box-shadow 0 0 9px 4px rgb(229,229,229,.55)
-    @media (max-width: 650px)
-      width calc(100% - 30px)
-      padding 10px
+    +mq('bp-5')
+      max-width 600px
 
 .answer-key
   font-size .9rem
   position absolute
-  left 1rem
-  top 50%
-  display block
+  margin 0 auto
+  display flex
+  top 0
+  left 0
+  right 0
+  transform translate(0,0)
+  justify-content center
+  margin-top 1rem
   transform translateY(-50%)
   opacity 0
-  font-family 'Space Mono'
+  font-family $national
   color #B6B6B6
-  @media (max-width: 600px)
+  +mq('bp-5')
     position absolute
-    margin 0 auto
-    display flex
-    top 0
-    left 0
-    right 0
-    transform translate(0,0)
-    justify-content center
-    margin-top 1rem
+    top 50%
+    left 1rem
+    display block
 
   .row
     display flex
-    margin-bottom .5rem
+    margin-bottom 0
+    margin-top 1rem
+    +mq('bp-5')
+      margin-bottom 0.5rem
     .count
+      display none
       font-size .9rem
-      color #696969
+      color $gray-text
       margin 0
       line-height 28px
-      @media (max-width: 650px)
-        display none
+      +mq('bp-5')
+        display flex
     .box
       border 1px solid #B6B6B6
-      width 10px
-      height 10px
       align-self center
       width 40px
       height 30px
       margin-right .5rem
     .filled-in
       text-align center
-      background-color #E5E5E5
+      background-color $gray-xlight
       color #565656
       font-size 14px
       line-height 28px
       font-family $national
     .active
-      border 2px solid black
+      border 3px solid $dark-navy
+    .active-count
+      font-weight 700
+      color $dark-navy  
 
 .noUi-pips
   padding 0
@@ -231,14 +260,14 @@
     position absolute
     transform translate(-50%,0)
     font-family $national
-    color #202034
-    font-size .8rem
-    font-weight 600
+    color $gray-text
+    set-type-size('small', true)
+    color $gray-text
   .noUi-marker-large
-    background #202034
+    background $dark-navy
     width 1px
   .noUi-marker-normal
-    background #E5E5E5
+    background $gray-light
     width 1px
     height 10px
 
@@ -284,10 +313,11 @@
     cursor grabbing
 
 .photo-answer
-  max-width 750px
-  width calc(100% - 25px)
-  margin 0 auto
-  margin-bottom 5rem
+  max-width 860px
+  width 100%
+  margin 2rem auto 4rem auto
+  +mq('bp-4')
+    margin 2rem auto 10rem auto
   .photo-answer-row-wrapper
     .photo-answer-row
       display flex
@@ -300,7 +330,7 @@
         .actual-bar
           width 2px
           height 100%
-          background #333
+          background $dark-navy
           position absolute
           top 0
           .actual-bar-background
@@ -311,7 +341,7 @@
             margin 0 auto
             transform translate(0,100%)
             width 120px
-            background white
+            background $off-white
             height 68px
 
           .actual-bar-info
@@ -323,20 +353,25 @@
             right 0
             margin 0 auto
             transform translate(0,100%)
-            width 120px
+            width 60px
+            +mq('bp-4')
+              width 130px
 
             p
               margin 0
               text-align center
-              font-size 14px
+              set-type-size('small', true)
               transform translate(-50%,0)
-              color #111
+              color $gray-text
+              font-family $national
               line-height 1.3
-              text-shadow 0 0 0 white, -1px 0 0 white, 1px 1px 0 white, 1px -1px 0 white, 0 1px 0 white, 1px 0 0 white, -1px -1px 0 white, 0 -1px 0 white
+              text-shadow 0 0 0 $off-white, -1px 0 0 $off-white, 1px 1px 0 $off-white, 1px -1px 0 $off-white, 0 1px 0 $off-white, 1px 0 0 $off-white, -1px -1px 0 $off-white, 0 -1px 0 $off-white
               &:first-of-type
                 font-weight 600
-                color #222
-                font-size 1rem
+                font-family $national
+                color $dark-navy
+                set-type-size('root', true)
+                line-height 1.3
 
 
         .photo-answer-slider
@@ -352,34 +387,34 @@
             .faded-dot
               width 10px
               height 10px
-              background #777777
+              background rgba($gray, 0.75)
               position absolute
               border-radius 50%
               opacity .5
               z-index 10
             .dot-big
-              width 20px
-              height 20px
+              width 1.5rem
+              height 1.5rem
               background $avgColor
-              top -4px
+              top -7px
               position absolute
               border-radius 50%
               box-shadow 0 0 9px 4px rgb(229,229,229,.55)
-              border 2px solid white
+              border 3px solid white
               z-index 100000
               p
                 font-family $national
-                font-size 14px
+                set-type-size('root', true)
                 position absolute
-                top -5px
+                top -8px
                 left 50%
                 transform translate(-50%,-100%)
-                color #fb431e
+                color $youColor
                 margin 0
                 width 80px
                 text-align center
                 line-height 1.1
-                text-shadow -1px 2px 0 white, 1px 2px 0 white, 2px -1px 0 white, 1px -2px 0 white, 2px 1px 0 white, -1px -1px 0 white, 0 -1px 0 white, 0 0 0 white, -1px 0 0 white, 1px 1px 0 white, 1px -1px 0 white, 0 1px 0 white, 1px 0 0 white, -1px -1px 0 white, 0 -1px 0 white, -2px 0 0 white, 2px 2px 0 white, 2px -2px 0 white, 0 2px 0 white, 2px 0 0 white, -2px -2px 0 white, 0 -2px 0 white
+                text-shadow -1px 2px 0 $off-white, 1px 2px 0 $off-white, 2px -1px 0 $off-white, 1px -2px 0 $off-white, 2px 1px 0 $off-white, -1px -1px 0 $off-white, 0 -1px 0 $off-white, 0 0 0 white, -1px 0 0 $off-white, 1px 1px 0 $off-white, 1px -1px 0 $off-white, 0 1px 0 $off-white, 1px 0 0 $off-white, -1px -1px 0 $off-white, 0 -1px 0 $off-white, -2px 0 0 $off-white, 2px 2px 0 $off-white, 2px -2px 0 $off-white, 0 2px 0 $off-white, 2px 0 0 $off-white, -2px -2px 0 $off-white, 0 -2px 0 $off-white
                 span
                   display block
                   font-weight 600
@@ -389,24 +424,24 @@
                 font-family $national
                 font-size 12px
                 position absolute
-                top -5px
+                top -8px
                 left 50%
                 transform translate(-50%,-100%)
 
             .dot-you
-              background #fb431e
+              background $youColor
               &:before
                 content ''
             .dot-avg
-              width 15px
-              height 15px
-              top 0
+              width 1.5rem
+              height 1.5rem
+              top -7px
               p
                 top auto
-                bottom -5px
+                bottom -8px
                 transform translate(-50%,100%)
                 color $avgColor
-                text-shadow -1px 2px 0 white, 1px 2px 0 white, 2px -1px 0 white, 1px -2px 0 white, 2px 1px 0 white, -1px -1px 0 white, 0 -1px 0 white, 0 0 0 white, -1px 0 0 white, 1px 1px 0 white, 1px -1px 0 white, 0 1px 0 white, 1px 0 0 white, -1px -1px 0 white, 0 -1px 0 white, -2px 0 0 white, 2px 2px 0 white, 2px -2px 0 white, 0 2px 0 white, 2px 0 0 white, -2px -2px 0 white, 0 -2px 0 white
+                text-shadow -1px 2px 0 $off-white, 1px 2px 0 $off-white, 2px -1px 0 $off-white, 1px -2px 0 $off-white, 2px 1px 0 $off-white, -1px -1px 0 $off-white, 0 -1px 0 $off-white, 0 0 0 $off-white, -1px 0 0 $off-white, 1px 1px 0 $off-white, 1px -1px 0 $off-white, 0 1px 0 $off-white, 1px 0 0 $off-white, -1px -1px 0 $off-white, 0 -1px 0 $off-white, -2px 0 0 $off-white, 2px 2px 0 $off-white, 2px -2px 0 $off-white, 0 2px 0 $off-white, 2px 0 0 $off-white, -2px -2px 0 $off-white, 0 -2px 0 $off-white
 
 
 
@@ -419,19 +454,34 @@
         .photo-answer-slider-container
           padding-bottom 10rem
           height auto
+
+    .bw-row .photo-answer-text-wrapper      
+      &:before
+        background-image url('assets/images/eye.png')
+        background-size 1rem 1rem
+        width 1rem
+        height 1rem
+        content ''
+        display inline-block
+        position relative
+        background-repeat no-repeat
+        margin-right .25rem
+        top .125rem
+
     .photo-answer-text-wrapper
-      width 200px
+      width 140px
       font-family $national
       margin 0
-      margin-left 4rem
+      margin-left 3rem
       position relative
       order 3
       align-self center
       font-size 1rem
-      color #656565
+      color $dark-navy
       line-height 1.3
       span
         font-weight 600
+
       p
         margin 0
         font-size 1rem
@@ -473,51 +523,56 @@
           //color black
     .photo-answer-photo
       width 180px
-      height 120px
+      height 130px
       padding 10px
-      box-shadow 0 0 9px 4px rgb(229,229,229,.55)
-      margin-right 4rem
-      background-size cover
+      box-shadow 0px 4px 10px rgba(229, 229, 229, 0.75)
+      margin-right 3rem
+      background-repeat no-repeat
+      background-size 85%
+      background-position center center
       position relative
       &:after
         content 'Black & White, Digitally Altered'
         position absolute
-        bottom -5px
+        bottom -8px
         left 0
         font-family $national
         text-align center
         width 100%
         transform translate(0,100%)
-        font-size .8rem
+        set-type-size('small', true)
         font-weight 400
+        color $gray-text
     .color-version
       &:after
         content 'Color, Original'
   .photo-answer-title-wrapper
     display flex
+    align-items center
     justify-content space-between
-    border-bottom 2px solid #E5E5E5
+    border-bottom 1px solid $gray-xlight
     margin-bottom 2.5rem
-    padding-bottom .5rem
+    padding-bottom .25rem
     @media (max-width: 750px)
       margin-bottom .5rem
     .photo-answer-title
-      font-family 'Space Mono'
+      font-family $national
       margin 0
-      font-weight 600
-      padding-left calc(200px + 4rem)
-      @media (max-width 750px)
-        padding-left 0
+      font-weight 700
+      color $dark-navy
+      set-type-size('medium', true)
+      +mq('bp-4')
+        set-type-size('x-large', true)
     .photo-answer-key
       display flex
       align-self center
       .photo-answer-key-box
-        border 2px solid #e5e5e5
+        border 1px solid $gray-light
         width 20px
         height 15px
         margin-right 5px
       .photo-answer-key-box-active
-        border 2px solid #222
+        border 3px solid $dark-navy
 
 .photo-answer
   .photo-answer-row-wrapper
@@ -534,13 +589,13 @@
         .photo-answer-photo
           width  100%
           height auto
-          padding-bottom 50%
+          padding-bottom calc(50% + 16%)
           margin 0 auto
         .photo-answer-slider-container
           width 100%
           height 1px
           flex-grow 1
-          margin-top 3rem
+          margin-top 5rem
           margin-bottom 2rem
           .actual-bar
             width 100%
@@ -552,9 +607,10 @@
               right auto
               p
                 transform translate(0%, -50%)
-                text-shadow -1px 2px 0 white, 1px 2px 0 white, 2px -1px 0 white, 1px -2px 0 white, 2px 1px 0 white, -1px -1px 0 white, 0 -1px 0 white, 0 0 0 white, -1px 0 0 white, 1px 1px 0 white, 1px -1px 0 white, 0 1px 0 white, 1px 0 0 white, -1px -1px 0 white, 0 -1px 0 white, -2px 0 0 white, 2px 2px 0 white, 2px -2px 0 white, 0 2px 0 white, 2px 0 0 white, -2px -2px 0 white, 0 -2px 0 white
+                color $dark-navy
+                text-shadow -1px 2px 0 $off-white, 1px 2px 0 $off-white, 2px -1px 0 $off-white, 1px -2px 0 $off-white, 2px 1px 0 $off-white, -1px -1px 0 $off-white, 0 -1px 0 $off-white, 0 0 0 $off-white, -1px 0 0 $off-white, 1px 1px 0 $off-white, 1px -1px 0 $off-white, 0 1px 0 $off-white, 1px 0 0 $off-white, -1px -1px 0 $off-white, 0 -1px 0 $off-white, -2px 0 0 $off-white, 2px 2px 0 $off-white, 2px -2px 0 $off-white, 0 2px 0 $off-white, 2px 0 0 $off-white, -2px -2px 0 $off-white, 0 -2px 0 $off-white
                 &:last-of-type
-                  width 80px
+                  width 60px
                   margin 0 auto
                   transform translate(0%,-10px)
                   line-height 1
@@ -577,14 +633,14 @@
                   bottom auto
                   top 50%
                   left auto
-                  right -5px
+                  right -8px
                   text-align left
               .dot-you
                 p
                   transform translate(-100%,-50%)
                   bottom auto
                   top 50%
-                  left -5px
+                  left -8px
                   right auto
                   text-align right
 
@@ -609,7 +665,7 @@
                 transform translate(-100%,-50%)
                 font-family $national
                 left -5px
-                font-size 1rem
+                set-type-size('small', true)
 
       .photo-answer-text-wrapper
         height auto
@@ -629,28 +685,50 @@
 
 
 .text-wrapper-end
+  h5
+    max-width $column-width
+    margin 0 auto
+    font-family $national
+    font-weight 700
+    set-type-size('large', true)
+    margin-bottom 1rem
+
   p
-    max-width 600px
+    max-width $column-width
     margin 0 auto
     margin-bottom 1.5rem
     font-family $tiempos
     font-size 1.2rem
-    width calc(100% - 25px)
     @media (max-width: 750px)
       font-size 1rem
+
+    a
+      &:hover  
+        color $gray
+        border-bottom 1px solid $gray
+
+  .notes
+    font-family $national 
+    set-type-size('root', true) 
+    margin-bottom 8rem  
 
 
 
 .all-done
   .header-text
-    font-size 1.8rem
-    max-width 600px
-    font-family $national
-    width calc(100% - 25px)
+    set-type-size('xxxx-large', false)
+    max-width $column-width
+    font-family $tiempos-hed
+    width 100%
     margin 0 auto
     font-weight 600
-    margin-bottom 2rem
-    padding-top 4rem
+    //margin-bottom 2rem
+    //padding-top 2rem
+    color $dark-navy
+    +mq('bp-3')
+      set-type-size('xxxxx-large', false)  
+    +mq('bp-4')
+      set-type-size('med-honker', false)   
   .photo-answer-wrapper
     margin-top 1rem
     margin-bottom 2rem
@@ -658,8 +736,161 @@
 .first-set
   p
     &:last-of-type
-      font-size 1.8rem
-      line-height 1.6
+      font-family $national
+      set-type-size('x-large', true)
       margin-top 3rem
-      @media (max-width: 750px)
-        font-size 1.3rem
+      +mq('bp-4')
+        set-type-size('xx-large', true)
+
+.yourColorspace, .otherColorspace
+  font-weight 700
+
+.youMarker
+  color $youColor
+  font-weight 700
+  &:before
+    content ''
+    width 1rem
+    height 1rem
+    position relative
+    left 0
+    top .25rem
+    border-radius 50%
+    border 3px solid white
+    display inline-block
+    background-color $youColor
+    box-shadow 0 0 9px 4px rgb(229,229,229,.75)
+    margin-right .25rem
+    +mq('bp-4')
+      width 1.25rem
+      height 1.25rem
+      top .125rem
+      margin-right .5rem
+
+
+
+// ANIMATIONS
+
+.noUi-handle
+  &:hover
+    animation shake 0.5s
+    animation-iteration-count 3
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
+
+@keyframes updown {
+	0%, 20%, 50%, 80%, 100% { 
+    transform: translateY(0)
+    }
+  40% { transform: translateY(-0.75rem) }
+	60% { transform: translateY(-0.5rem) }
+}	
+
+// PHOTO INTRO
+
+.photo-bg
+  width 100%
+  height 100vh
+  position absolute
+  z-index 0
+  opacity 0.2 
+
+  .grid
+    pointer-events none
+    position absolute
+    width 110%
+    height 110%
+    top -5%
+    left -5%
+    display grid
+    grid-template-columns repeat(50,2%)
+    grid-template-rows repeat(50,2%)
+
+    .grid__item
+      position relative
+
+      .grid__item-img
+        position relative
+        width 100%
+        height 100%
+        background-size cover
+        background-position: 50% 50%
+        //opacity 0.25 
+
+    .pos-1
+      grid-area 10 / 1 / 26 / 7
+
+      .grid__item-img
+        background-image url('assets/images/photo1_bw.jpg')
+
+    .pos-2
+      grid-area 1 / 18 / 9 / 27
+
+      .grid__item-img
+        background-image url('assets/images/photo2_bw.jpg')   
+
+    .pos-3
+      grid-area 1 / 36 / 14 / 42
+
+      .grid__item-img
+        background-image url('assets/images/photo3_bw.jpg')
+
+    .pos-4
+      grid-area 13 / 11 / 32 / 18
+
+      .grid__item-img
+        background-image url('assets/images/photo4_bw.jpg') 
+
+    .pos-5
+      grid-area 17 / 32 / 32 / 38
+
+      .grid__item-img
+        background-image url('assets/images/photo5_bw.jpg')
+
+    .pos-6
+      grid-area 20 / 46 / 28 / 51
+
+      .grid__item-img
+        background-image url('assets/images/photo6_bw.jpg')
+
+    .pos-7
+      grid-area 43 / 1 / 51 / 10
+
+      .grid__item-img
+        background-image url('assets/images/photo7_bw.jpg')
+
+    .pos-8
+      grid-area 38 / 14 / 46 / 22
+
+      .grid__item-img
+        background-image url('assets/images/photo8_bw.jpg')  
+
+    .pos-9
+      grid-area 40 / 26 / 51 / 32
+
+      .grid__item-img
+        background-image url('assets/images/photo9_bw.jpg')
+
+    .pos-10
+      grid-area 37 / 39 / 48 / 47
+
+      .grid__item-img
+        background-image url('assets/images/photo10_bw.jpg')                       
+                    
+

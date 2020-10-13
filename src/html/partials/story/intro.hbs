@@ -1,3 +1,22 @@
+<div class='photo-bg'>
+	<div class="grid">
+		<div class="grid__item pos-1"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-2"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-3"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-4"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-5"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-6"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-7"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-8"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-9"><div class="grid__item-img"></div></div>
+		<div class="grid__item pos-10"><div class="grid__item-img"></div></div>
+	</div>
+</div>
+
+<div class='down-arrow'>
+	<img inline src='arrow-down.svg'>
+</div>
+
 <div class='intro'>
 
 	<div class="quiz">
@@ -29,10 +48,9 @@
 							<p class='med-text'>We’re going to show you a series of photos and ask you how long ago each picture was taken. </p>
 						</div>
 
-						<div class="button-wrapper">
+
 							<button class="black-button">Ok. Let&rsquo;s do this
 							</button>
-						</div>
 					</div>
 
 
@@ -138,7 +156,7 @@
 				</div>
 
 				<div class="swiper-slide all-done">
-					<p class="header-text">Congrats – you’ve made it through the quiz! But what does it all mean?
+					<p class="header-text">Congrats!
 					</p>
 
 					<div class="text-wrapper-end">
@@ -153,8 +171,9 @@
 					</div>
 
 					<div class="text-wrapper-end">
+						<h5>Notes</h5>
 							{{#each copy.methods}}
-									<p>{{{value}}}</p>
+									<p class='notes'>{{{value}}}</p>
 							{{/each}}
 					</div>
 
