@@ -19,6 +19,9 @@ let finished = false;
 
 let photoArrayMap;
 
+const $openerButton = d3.select('#opener-button')
+const $resultsButton = d3.select('#results-button')
+
 let actualDates = {
 1:2006,2:1963,3:1969,4:2007,5:1940,6:1977,7:1976,8:1987,9:1970,10:1946
 }
@@ -88,6 +91,11 @@ function swiperController(){
     mySwiper.slideNext();
     d3.select('.photo-bg').style('display', 'none')
   });
+
+  $resultsButton.on('click', function(d) {
+    console.log('clicked')
+    mySwiper.slideTo(7)
+  })
 
   d3.select(".age-slide").select(".black-button").on("click",function(d){
     console.log('check')
@@ -634,6 +642,13 @@ function slideChangeEvents(){
   });
 }
 
+function showReturnScreen() {
+  if (finished) {
+    $openerButton.text('Take the quiz again')
+    $resultsButton.classed('is-visible', true)
+  }
+}
+
 function init(data) {
   preloadImages('.grid__item-img').then(() => {
     // Remove loader (loading class)
@@ -642,7 +657,6 @@ function init(data) {
     // Initialize grid
     const grid = new Grid(document.querySelector('.grid'));
   });
-
 
   allReaderData = data[1];
   delete allReaderData.columns;
@@ -722,7 +736,7 @@ function init(data) {
   swiperController();
   slideChangeEvents();
   setupDB();
-  // buildFinalSlide();
+  showReturnScreen();
 }
 
 function shuffle(array) {

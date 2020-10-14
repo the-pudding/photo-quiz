@@ -98,18 +98,51 @@ body
   .wrapper
     padding 4rem 1rem 0 1rem 
 
+.skip-button
+  width 15rem
+  font-size 1rem
+  border 3px solid $gray-text
+  background-color transparent
+  max-width 15rem
+  height 4rem
+  color $gray-text
+  padding 1rem
+  font-weight 600
+  text-transform uppercase
+  letter-spacing 1px
+  font-family $national
+  margin 1rem 0 0 0
+  background-repeat no-repeat
+  transition background-position .08s ease-out
+  background-image linear-gradient(180deg, transparent 0, $gray-text 0)
+  background-position -15rem 0
+  pointer-events all
+  position relative
+  transition 0.25s ease-in
+  display none
+  &:hover
+    background-position 0rem 0rem
+    color $white
+  &.is-visible  
+    display block
+    +mq('bp-4')
+      display inline-block 
+  +mq('bp-4')
+    margin 0 0 0 1rem 
+
 .black-button, .photo-submit
+  width 15rem
   background-repeat no-repeat
   transition background-position .08s ease-out
   background-image linear-gradient(180deg, transparent 0, $dark-navy 0)
-  background-position -14rem 0
+  background-position -15rem 0
   pointer-events all
   position relative
   transition 0.25s ease-in
   font-size 1rem
   border 3px solid $dark-navy
   background-color transparent
-  max-width 14rem
+  max-width 15rem
   height 4rem
   color $dark-navy
   font-family $national
