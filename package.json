@@ -15,6 +15,7 @@
     "imagesloaded": "^4.1.4",
     "lodash.debounce": "^4.0.8",
     "nouislider": "14.2.0",
+    "sweetalert2": "^10.5.1",
     "swiper": "^6.3.2"
   },
   "devDependencies": {

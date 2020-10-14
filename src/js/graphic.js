@@ -1,11 +1,12 @@
 import Swiper from 'swiper';
 import noUiSlider from 'nouislider'
 import db from './db';
+import locate from './utils/locate';
 import Cursor from './cursor';
 import Grid from './grid';
 import { preloadImages } from './utils/photo-intro-utils';
 
-
+let isInUS = false;
 let hasExistingData = null;
 let mySwiper = null;
 let photoArray = null;
@@ -13,6 +14,8 @@ let startingNum = null;
 let age = null;
 let currentQuestion = 1;
 let colorCrossText = {0:"black and white",1:"color"}
+let slider = null;
+let finished = false;
 
 let photoArrayMap;
 
@@ -101,7 +104,9 @@ function swiperController(){
     output.push(currentPhoto);
 
     if(d3.select(".swiper-slide-active").classed("last-question")){
-      db.update({"year":age,"answers":output});
+      if (!finished && isInUS) {
+        db.update({"year":age,"answers":output});
+      }
       buildFinalSlide();
       d3.select(".all-done").style("height","auto");
     }
@@ -504,25 +509,18 @@ function buildFinalSlide(){
 
 function setupDB() {
   db.setup();
-  const answers = db.getAnswers();
-  if(answers){
-    // hasExistingData = true;
-    //
-    // yearSelected = answers["year"];
-    // genSelected = getGeneration(yearSelected);
-    //
-    // d3.select(".new-user").style("display","none")
-    // d3.select(".old-user").style("display","flex")
-    // d3.selectAll(".old-bday").text(yearSelected);
-    //
-    // answers["answers"].forEach(function(d){
-    //   dbOutput.push(d);
-    //   let songInfo = uniqueSongMap.get(d.key);
-    //   songOutput.push({"song_url":songInfo.song_url,"key":d.key,"artist":songInfo.artist,"title":songInfo.title,"text":answersKey[d.answer].text,"answer":d.answer,"year":songInfo.year})
-    // })
-    //remove this when staging live
-    // quizOutput();
-    // updateOnCompletion();
+  // TODO
+  finished = !!db.getFinished()
+  
+  if (true) {
+  locate().then(data => {
+      isInUS = data.country === 'US';
+    db.setUS(isInUS);
+    }).catch(err => {
+      // TODO 
+      isInUS = false;
+      db.setUS(isInUS );
+    });
   }
 }
 
@@ -637,7 +635,6 @@ function slideChangeEvents(){
 }
 
 function init(data) {
-
   preloadImages('.grid__item-img').then(() => {
     // Remove loader (loading class)
     document.body.classList.remove('loading');
@@ -673,7 +670,7 @@ function init(data) {
 
     let start = d3.range(1930,2000,1)[Math.floor(Math.random()*70)];
 
-    let slider = noUiSlider.create(el, {
+    slider = noUiSlider.create(el, {
       start: [start],
       step:1,
       tooltips: true,

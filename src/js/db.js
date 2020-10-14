@@ -4,7 +4,7 @@ import '@firebase/database';
 import generateID from './generate-id';
 import checkStorage from './check-storage';
 
-const DEV = false;
+const DEV = true;
 let firebaseApp = null;
 let firebaseDB = null;
 let userData = {};
@@ -24,10 +24,11 @@ function getAnswer(id) {
 function getAnswers() {
   if (userData.answers)
     return userData.answers;
-    // return Object.keys(userData.answers)
-    //   .map(k => userData.answers[k])
-    //   .map(d => ({ ...d, min: +d.min, max: +d.max }));
   return null;
+}
+
+function getFinished() {
+  return userData.finished;
 }
 
 function getAnswerCount() {
@@ -44,6 +45,11 @@ function getReturner() {
 
 function getSeenResults() {
   return userData.results;
+}
+
+function setUS(val) {
+  userData.isUS = val;
+  if (hasStorage) window.localStorage.setItem('pudding_photo_us', val);
 }
 
 function setResults() {
@@ -67,12 +73,15 @@ function setupUserData() {
 
     let answers = window.localStorage.getItem('pudding_photo_answers');
     answers = answers ? JSON.parse(answers) : null;
+
+    const isUS = window.localStorage.getItem('pudding_photo_us') === 'true';
+    const finished = window.localStorage.getItem('pudding_photo_finished') === 'true';
     //
     // const returner = window.localStorage.getItem('pudding_laugh_returner');
     // const results = window.localStorage.getItem('pudding_laugh_results');
 
     //return { id, answers, returner, results };
-    return { id, answers };
+    return { id, answers, isUS, finished };
 
   }
 
@@ -101,7 +110,8 @@ function clear() {
 }
 
 function setup() {
-  //if (window.location.host.includes('localhost')) clear();
+  // clears all local data, creates brand new user every time
+  // if (window.location.host.includes('localhost')) clear();
   userData = setupUserData();
   if(!connected){
     if (!userData.finished) connect();
@@ -134,20 +144,18 @@ function getSubmissions(data) {
 }
 
 function update(output) {
-  // userData.answers[key] = {
-  //   key,
-  //   order,
-  //   min: min ? formatDecimal(min) : '1.00',
-  //   max: max ? formatDecimal(max) : '5.00',
-  //   store: min && max ? 'true' : 'false',
-  // };
-  userData.answers = output
+  userData.finished = true;
+  userData.answers = output;
   console.log(hasStorage);
-  if (hasStorage)
+  if (hasStorage) {
     window.localStorage.setItem(
       'pudding_photo_answers',
       JSON.stringify(userData.answers)
     );
+    window.localStorage.setItem(
+      'pudding_photo_finished', true
+    );
+  }
 
   if (!DEV && connected) {
     firebaseDB
@@ -175,4 +183,6 @@ export default {
   getReturner,
   getAnswerCount,
   closeConnection,
+  setUS,
+  getFinished,
 };
