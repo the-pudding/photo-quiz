@@ -555,6 +555,10 @@ function init(data) {
         }
     });
     d = slider;
+
+    el.noUiSlider.on('start', function(d) {
+      d3.selectAll('.swiper-slide-active').select('.photo-submit').classed('is-disabled', false)
+    })
   })
 
   let ageStart = d3.range(1940,2010,1)[Math.floor(Math.random()*70)];
