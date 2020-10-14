@@ -1,3 +1,5 @@
+const imagesLoaded = require('imagesloaded');
+
 // Map number x from range [a, b] to [c, d]
 const map = (x, a, b, c, d) => (x - a) * (d - c) / (b - a) + c;
 
@@ -27,4 +29,11 @@ const getMousePos = (e) => {
     return { x : posx, y : posy }
 };
 
-export { map, lerp, calcWinsize, getRandomNumber, getMousePos };
+// Preload images
+const preloadImages = (selector) => {
+    return new Promise((resolve, reject) => {
+        imagesLoaded(document.querySelectorAll(selector), resolve);
+    });
+};
+
+export { map, lerp, calcWinsize, getRandomNumber, getMousePos, preloadImages };

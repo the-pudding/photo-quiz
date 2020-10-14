@@ -3,6 +3,7 @@ import noUiSlider from 'nouislider'
 import db from './db';
 import Cursor from './cursor';
 import Grid from './grid';
+import { preloadImages } from './utils/photo-intro-utils';
 
 
 let hasExistingData = null;
@@ -110,6 +111,7 @@ function swiperController(){
 
     if(currentQuestion == 6) {
       d3.selectAll('.down-arrow').classed('is-visible', true)
+      d3.selectAll('.pudding-footer').style('display', 'block')
     }
   })
 }
@@ -636,10 +638,13 @@ function slideChangeEvents(){
 
 function init(data) {
 
-  // Initialize grid
-  const grid = new Grid(document.querySelector('.grid'));
+  preloadImages('.grid__item-img').then(() => {
+    // Remove loader (loading class)
+    document.body.classList.remove('loading');
 
-  //const cursor = new Cursor(document.querySelector('.cursor'));
+    // Initialize grid
+    const grid = new Grid(document.querySelector('.grid'));
+  });
 
 
   allReaderData = data[1];
@@ -692,8 +697,11 @@ function init(data) {
     //d.slider = slider;
   })
 
-  noUiSlider.create(d3.select("#age-slider").node(), {
-    start: [1985],
+  const $ageSlider = d3.select("#age-slider").node()
+  let ageStart = d3.range(1940,2010,1)[Math.floor(Math.random()*70)];
+
+  noUiSlider.create($ageSlider, {
+    start: [ageStart],
     step:1,
     tooltips: true,
     format: {

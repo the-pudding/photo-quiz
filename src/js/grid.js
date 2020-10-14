@@ -50,7 +50,7 @@ export default class Grid {
     showItems() {
         gsap
         .timeline()
-        .set(this.items, {scale: 0.7, opacity: 0}, 0)
+        .set(this.items, {scale: 0.7}, 0)
         .to(this.items, {
             duration: 2,
             ease: 'Expo.easeOut',
@@ -60,7 +60,6 @@ export default class Grid {
         .to(this.items, {
             duration: 3,
             ease: 'Power1.easeOut',
-            opacity: 0.4,
             stagger: {amount: 0.6, grid: 'auto', from: 'center'}
         }, 0);
     }

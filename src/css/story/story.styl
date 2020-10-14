@@ -6,6 +6,9 @@ body
   path
     fill $dark-navy
 
+#content
+  overflow hidden
+
 .down-arrow
   position absolute
   right 1rem
@@ -771,10 +774,10 @@ body
 
 // ANIMATIONS
 
-.noUi-handle
-  &:hover
-    animation shake 0.5s
-    animation-iteration-count 3
+//.noUi-handle
+  //&:hover
+    //animation shake 0.5s
+    //animation-iteration-count 3
 
 @keyframes shake {
   10%, 90% {
@@ -809,13 +812,13 @@ body
   height 100vh
   position absolute
   z-index 0
-  opacity 0.2 
+  opacity 0.1 
 
   .grid
     pointer-events none
     position absolute
-    width 110%
-    height 110%
+    width 100%
+    height 100%
     top -5%
     left -5%
     display grid
