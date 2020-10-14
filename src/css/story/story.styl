@@ -152,9 +152,10 @@ body
   letter-spacing 1px
   margin 0 auto
   margin-top 1rem
-  //@media (max-width: 500px), (max-height: 500px)
-  //  font-size .8rem
-  //  padding .7rem
+  pointer-events auto
+  &.is-disabled
+    opacity 0.1
+    pointer-events none
   &:hover
     background-position 0rem 0rem
     color $white
@@ -807,10 +808,9 @@ body
 
 // ANIMATIONS
 
-//.noUi-handle
-  //&:hover
-    //animation shake 0.5s
-    //animation-iteration-count 3
+.noUi-handle
+  animation shake 1s
+  animation-iteration-count infinite
 
 @keyframes shake {
   10%, 90% {
