@@ -451,6 +451,8 @@ function buildAnswerKey(){
 
 function slideChangeEvents(){
   mySwiper.on('slideChangeTransitionEnd', function () {
+    d3.selectAll('.noUi-handle').style('animation-play-state', 'initial')
+
     if(d3.select(".swiper-slide-active").classed("before-quiz-begins")){
 
       let photoId = selectPhoto();
@@ -558,6 +560,7 @@ function init(data) {
 
     el.noUiSlider.on('start', function(d) {
       d3.selectAll('.swiper-slide-active').select('.photo-submit').classed('is-disabled', false)
+      d3.selectAll('.noUi-handle').style('animation-play-state', 'paused')
     })
   })
 
