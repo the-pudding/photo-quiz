@@ -96,7 +96,7 @@ body
     margin-bottom 1rem
 
   .wrapper
-    padding 4rem 1rem 0 1rem 
+    padding 0 1rem 
 
 .skip-button
   width 15rem
@@ -161,7 +161,7 @@ body
     color $white
 .photo-submit
   padding 1rem 3rem
-  margin 0 auto 2rem auto
+  margin 1rem auto 2rem auto
 
 .photo-container
   margin 0 auto
@@ -211,6 +211,9 @@ body
     justify-content space-around
     height 100vh
     padding 2rem 1rem 0 1rem
+    &.photo-question
+      height 90vh
+      min-height 90vh
 
 
 #age-slider, .photo-slider
@@ -351,10 +354,12 @@ body
 
 .photo-answer
   max-width 860px
+  //border-top 1px solid $gray-light
+  //padding-top 2rem
   width 100%
-  margin 2rem auto 4rem auto
+  margin 0 auto 2rem auto
   +mq('bp-4')
-    margin 2rem auto 10rem auto
+    margin 0rem auto 8rem auto
   .photo-answer-row-wrapper
     .photo-answer-row
       display flex
@@ -373,7 +378,7 @@ body
           top 0
           .actual-bar-background
             position absolute
-            top -9.7rem
+            top -8.7rem
             left 0
             right 0
             margin 0 auto
@@ -386,7 +391,7 @@ body
             font-family $national
             font-size 12px
             position absolute
-            top -7rem
+            top -6rem
             left 0
             right 0
             margin 0 auto
@@ -490,8 +495,10 @@ body
             display none
       &:first-of-type
         .photo-answer-slider-container
-          padding-bottom 10rem
-          height auto
+          padding-bottom 8rem
+          height 1px
+          +mq('bp-X')
+            height auto
 
     .bw-row .photo-answer-text-wrapper      
       &:before
@@ -770,11 +777,19 @@ body
     +mq('bp-4')
       set-type-size('med-honker', false)   
   .photo-answer-wrapper
-    margin-top 1rem
-    margin-bottom 2rem
+    margin-top 4rem
+
+    h5
+      max-width $column-width
+      font-family $national
+      set-type-size('x-large', true)
+      margin 3rem auto 2rem auto
+      +mq('bp-4')
+        set-type-size('xx-large', true)
 
 .first-set
   p
+    color $dark-navy
     &:last-of-type
       font-family $national
       set-type-size('x-large', true)
