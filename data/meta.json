@@ -1,12 +1,12 @@
 {
-	"title": "Title Case Hed Goes Here",
-	"description": "Sentence case dek goes down here. Modify these in data/meta.json.",
+	"title": "Photo quiz: This is an experiment about how we view history",
+	"description": "We’re going to show you a series of photos and ask you how long ago each picture was taken.",
 	"site": "https://pudding.cool",
 	"siteName": "The Pudding",
-	"url": "https://pudding.cool/year/month/name/",
+	"url": "https://pudding.cool/2020/10/photo-history/",
 	"keywords": "tk",
-	"imgFacebook": "https://pudding.cool/year/month/name/assets/social/social-facebook.jpg",
-	"imgTwitter": "https://pudding.cool/year/month/name/assets/social/social-twitter.jpg",
+	"imgFacebook": "https://pudding.cool/2020/10/photo-history/assets/social/social-facebook.jpg",
+	"imgTwitter": "https://pudding.cool/2020/10/photo-history/assets/social/social-twitter.jpg",
 	"author": {
 		"name": "The Pudding",
 		"url": "https://pudding.cool/author/the-pudding-team",
