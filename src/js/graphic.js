@@ -86,7 +86,8 @@ function swiperController(){
     mySwiper.slideTo(7)
     d3.select('.photo-bg').style('display', 'none')
     d3.select(".all-done").style("height","auto")
-    //buildFinalSlide()
+    output = db.getAnswers();
+    buildFinalSlide()
   })
 
   sliderAge.on('start', function(d) {
@@ -107,7 +108,7 @@ function swiperController(){
     output.push(currentPhoto);
 
     if(d3.select(".swiper-slide-active").classed("last-question")){
-      if (!finished && isInUS) { db.update({"year":age,"answers":output}); }
+      if (!finished && isInUS) db.update({"year":age,"answers":output});
       buildFinalSlide();
       d3.select(".all-done").style("height","auto");
     }
@@ -122,13 +123,33 @@ function swiperController(){
   })
 }
 
+function buildResults(data, type) {
+  console.log(data, type)
+
+  
+
+}
+
 function buildFinalSlide(){
   console.log("building final slide")
-  let container = d3.select(".photo-answer-wrapper");
+  let container = d3.select(".photo-answer-wrapper-your");
   let results = output;
+  const others = d3.range(10).map(d => {
+    const id = `${d + 1}`;
+    const match = output.find(o => o.id === id);
+    if (!match) return { id };
+    return null;
+  }).filter(d => d);
+
+
   let photoAnswers = container.selectAll("div").data(results).enter().append("div").attr("class","photo-answer");
   let photoAnswerTitleWrapper = photoAnswers.append("div").attr("class","photo-answer-title-wrapper");
 
+  // BUILD YOUR RESULTS
+  buildResults(results, "yours")
+  buildResults(others, "others")
+
+  // TODO BUILD ALL RESULTS
   photoAnswerTitleWrapper.append("p").attr("class","photo-answer-title").html(function(d,i){ return "Photo No. <span>"+(i+1)+"</span>"; })
 
   photoAnswerTitleWrapper.append("div").datum(function(d,i){ return i; })

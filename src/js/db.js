@@ -23,7 +23,7 @@ function getAnswer(id) {
 
 function getAnswers() {
   if (userData.answers)
-    return userData.answers;
+    return userData.answers.answers;
   return null;
 }
 
@@ -107,6 +107,8 @@ function clear() {
   console.log("clearing");
   localStorage.removeItem('pudding_photo_id');
   localStorage.removeItem('pudding_photo_answers');
+  localStorage.removeItem('pudding_photo_finished');
+  localStorage.removeItem('pudding_photo_us');
 }
 
 function setup() {
