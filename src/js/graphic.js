@@ -85,6 +85,8 @@ function swiperController(){
     console.log('clicked')
     mySwiper.slideTo(7)
     d3.select('.photo-bg').style('display', 'none')
+    d3.select(".all-done").style("height","auto")
+    //buildFinalSlide()
   })
 
   sliderAge.on('start', function(d) {
@@ -121,6 +123,7 @@ function swiperController(){
 }
 
 function buildFinalSlide(){
+  console.log("building final slide")
   let container = d3.select(".photo-answer-wrapper");
   let results = output;
   let photoAnswers = container.selectAll("div").data(results).enter().append("div").attr("class","photo-answer");
