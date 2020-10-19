@@ -16,7 +16,7 @@ function loadFile(file) {
 
     const ext = file.split('.').pop().split("?")[0];
 
-    console.log(file);
+    //console.log(file);
 
     if(file.includes("https")){
       d3.csv(file)

@@ -87,6 +87,8 @@ function swiperController(){
     d3.select(".all-done").style("height","auto")
     output = db.getAnswers();
     buildFinalSlide()
+    d3.selectAll('.pudding-footer').style('display', 'block')
+    d3.selectAll('.down-arrow').classed('is-visible', true)
   })
 
   sliderAge.on('change', function(d) {
@@ -205,7 +207,7 @@ function buildResults(data, belongsTo) {
     let change = "older";
     if(avgBw > avgColor){ change = "newer"; }
     if(d3.select(this.parentNode).classed("bw-row")){
-      return "People who saw this photo in black and white dated it <span>"+(diffVal)+" years "+change+"</span> than people who saw it in color."
+      return "People who saw this photo in black and white dated it "+(diffVal)+" years <span>"+change+"</span> than people who saw it in color."
     }
     return null;
   })
@@ -215,6 +217,11 @@ function buildResults(data, belongsTo) {
     let rowData = d3.select(this.parentNode.parentNode.parentNode).datum();
     let fileName = colorCrossWalk[d[0]];
     return "url(assets/images/"+photoArrayMap.get(rowData.id)[fileName]+")";
+  })
+  .attr('alt', function() { 
+    const rowData = d3.select(this.parentNode.parentNode.parentNode).datum();
+    const { alt } = photoArray.find(p => p.key === rowData.id);
+    return alt;
   })
   .classed("color-version",function(d){
     let rowData = d3.select(this.parentNode.parentNode.parentNode).datum();
@@ -364,7 +371,7 @@ function buildResults(data, belongsTo) {
     return "<span>Avg</span>"+avg;
   })  
 
-  // Append actual data
+  // Append actual date
   let secondRow = photoAnswersRow.filter(function(d,i){
     if(i!=0){ return d; }
   })
@@ -438,9 +445,19 @@ function selectPhoto(){
   if(startingNum == photoArray.length - 1 || startingNum == photoArray.length){ startingNum = 0; }
 
   let photoId = photoArray[startingNum].key;
+  let altText = photoArray[startingNum].alt
 
   photosSelected.push(photoId);
-  return photoId;
+  return  photoId;
+}
+
+function selectAltText(){
+
+  if(startingNum == photoArray.length - 1 || startingNum == photoArray.length){ startingNum = 0; }
+
+  let altText = photoArray[startingNum].alt
+
+  return altText;
 }
 
 function buildAnswerKey(){
@@ -470,7 +487,8 @@ function slideChangeEvents(){
 
     if(d3.select(".swiper-slide-active").classed("before-quiz-begins")){
 
-      let photoId = selectPhoto();
+      let photoId = selectPhoto()
+      let altText = selectAltText()
       let color = getColor();
       let fileName = colorCrossWalk[color];
       let photoUrl = photoArrayMap.get(photoId)[fileName];
@@ -480,8 +498,11 @@ function slideChangeEvents(){
 
       d3.select(".quiz-begins").select(".photo-container")
         .each(function(d){
-            d3.select(this).node().appendChild(img);
-            console.log("loading next photo");
+            let $photoContainter = d3.select(this)
+            $photoContainter.node().appendChild(img);
+            let photo = $photoContainter.select('img')
+            photo.attr('alt', altText)
+            //console.log("loading next photo");
             nextPhoto = {id:photoId,color:color};
         });
     }
@@ -489,7 +510,8 @@ function slideChangeEvents(){
     if (d3.select(".swiper-slide-active").classed("photo-question")){
 
       currentPhoto = nextPhoto;
-      let photoId = selectPhoto();
+      let photoId = selectPhoto()
+      let altText = selectAltText()
       let color = getColor();
       let fileName = colorCrossWalk[color];
 
@@ -499,7 +521,10 @@ function slideChangeEvents(){
 
       d3.select(".swiper-slide-next").select(".photo-container")
         .each(function(d){
-          d3.select(this).node().appendChild(img);
+          let $photoContainter = d3.select(this)
+          $photoContainter.node().appendChild(img);
+          let photo = $photoContainter.select('img')
+          photo.attr('alt', altText)
           nextPhoto = {id:photoId,color:color};
         });
     }
