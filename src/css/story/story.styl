@@ -191,6 +191,11 @@ body
   text-align center
   font-size 1rem
   margin 0 auto
+  line-height 1.25
+  &.bolded
+    color $dark-navy
+    font-weight 700
+    margin-bottom 0.75rem
   @media (max-width: 450px)
     width calc(100% - 6rem)
     margin-left auto
@@ -200,6 +205,7 @@ body
     width 30px
     svg
       width 100%
+      fill $gray-dark
       transform translateY(7px)
 
 .swiper-wrapper

@@ -207,7 +207,13 @@ function buildResults(data, belongsTo) {
     let change = "older";
     if(avgBw > avgColor){ change = "newer"; }
     if(d3.select(this.parentNode).classed("bw-row")){
-      return "People who saw this photo in black and white dated it "+(diffVal)+" years <span>"+change+"</span> than people who saw it in color."
+      if (avgBw > avgColor) {
+        return "On average, people who saw this photo in black and white dated it "+(diffVal)+" years <span>newer</span> than people who saw it in color."
+      }
+      else if (avgBw < avgColor) {
+        return "On average, people who saw this photo in black and white dated it "+(diffVal)+" years <span>older</span> than people who saw it in color."
+      }
+      return "On average, people who saw this photo in black and white dated it the <span>same</span> as people who saw it in color."
     }
     return null;
   })
