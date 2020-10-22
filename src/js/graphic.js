@@ -204,16 +204,16 @@ function buildResults(data, belongsTo) {
     let avgBw = averagesCalculated.get(id+"_0");
     let avgColor = averagesCalculated.get(id+"_1");
     let diffVal = Math.abs(avgBw - avgColor)
-    let change = "older";
-    if(avgBw > avgColor){ change = "newer"; }
+    let plural = "years";
+    if(diffVal == 1) { plural = 'year'; }
     if(d3.select(this.parentNode).classed("bw-row")){
       if (avgBw > avgColor) {
-        return "On average, people who saw this photo in black and white dated it "+(diffVal)+" years <span>newer</span> than people who saw it in color."
+        return `On average, people who saw this photo in black and white dated it ${diffVal} ${plural} <span>newer</span> than people who saw it in color.`
       }
       else if (avgBw < avgColor) {
-        return "On average, people who saw this photo in black and white dated it "+(diffVal)+" years <span>older</span> than people who saw it in color."
+        return `On average, people who saw this photo in black and white dated it ${diffVal} ${plural} <span>older</span> than people who saw it in color.`
       }
-      return "On average, people who saw this photo in black and white dated it the <span>same</span> as people who saw it in color."
+      return `On average, people who saw this photo in black and white dated it the <span>same</span> year as people who saw it in color.`
     }
     return null;
   })
