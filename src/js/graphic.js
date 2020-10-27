@@ -248,6 +248,7 @@ function buildResults(data, belongsTo) {
       step:1,
       tooltips: true,
       orientation: orient,
+      disabled: true,
       format: {
         from: Number,
         to: function(value) {
@@ -265,6 +266,8 @@ function buildResults(data, belongsTo) {
         }
     });
   });
+
+  //slider.setAttribute('disabled', true);
 
   let scale = d3.scaleLinear().domain([1920,2020]).range([0,100])
 
@@ -322,7 +325,12 @@ function buildResults(data, belongsTo) {
   // Apended all faded dots
   dotWrapper.append("div").attr("class","faded-dots-wrapper")
     .selectAll("div")
-    .data(function(d){ return d[1] })
+    .data(function(d){ 
+      let dotLen = d[1].length
+      let dotData = d[1]
+      let dotSubset = dotData.slice((dotLen - 100), dotLen)
+      return dotSubset 
+    })
     .enter()
     .append("div")
     .attr("class","faded-dot")
