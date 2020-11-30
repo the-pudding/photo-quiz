@@ -82,10 +82,13 @@ body
     set-type-size('large', true)
     width 100%
     margin 0
-    margin-top 2rem
+    margin-top 1rem
     text-align left
     +mq('bp-3')
       set-type-size('x-large', true)  
+
+  .small-text
+    margin-bottom 1rem    
 
   .black-button
     margin 0
@@ -192,14 +195,12 @@ body
   font-size 1rem
   margin 0 auto
   line-height 1.25
+  &.left
+    text-align left
   &.bolded
     color $dark-navy
     font-weight 700
     margin-bottom 0.75rem
-  @media (max-width: 450px)
-    width calc(100% - 6rem)
-    margin-left auto
-    margin-right auto
   span
     display inline-block
     width 30px
